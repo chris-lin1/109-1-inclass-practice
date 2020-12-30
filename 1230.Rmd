@@ -1,0 +1,192 @@
+ ---
+title: "homework 7"
+output: html_document
+params:
+  studentName: "林鴻羿"
+  studentID: "410773097"
+---
+
+# 注意事項
+
+存檔與填寫注意事項：
+
+假設你叫王小明，學號41078392。
+
+  1. 有些同學可能家裡電腦不是utf-8設定，為防萬一，請於存檔時使用：File > save with enconding, 然後選utf-8
+
+  2. 本文檔開始的Frontmatter中，studentID（即key）其value目前為"你的學號"，以上面學號為例則必需改成"41078392"；而studentName（key）其value目前為"你的名字"，以上面名字為例則必需改成"王小明"
+  
+> 每次作業滿分10分：有寫作業於期限內上傳得3分，剩餘7分依作業準確率決定最後得分多寡，除非該題另有規定。
+
+> 前述存檔與frontmatter要求缺任何一個則扣1分。
+
+請先執以下code chunk, 引入所需packages，答案禁止引用其他套件（Package）。
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, eval=F)
+library(jsonlite); library(lubridate); library(readr); library(stringr); library(purrr)
+```
+
+# 題目
+
+完成第5章綜合練習以下幾題：
+
+### 4. 故宮畫藏查詢App{-}
+
+執行以下程式下載200幅故宮中國畫作資訊(**painting**):
+```{r data4, echo=T}
+jsonlite::fromJSON("https://www.dropbox.com/s/ttw2j7nitc35vfx/palaceMuseumPainting.json?dl=1", simplifyDataFrame = F) -> painting
+```
+
+#### 4.5 Dynasties Identification{-}
+Please write the function called get_painting_dynasty with one function input called PaintingName. The function works as following:
+
+When we enter the name of the painting, for example the 4th painting "主要題名：五代後蜀滕昌祐蝶戲長春圖　卷",
+
+it will return us the dynasty of it, namely [1] "五代後蜀". The output is in character class rather than the list.
+
+
+
+```{r}
+map()
+get_painting_dynasty <- function(PaintingName){
+
+}
+
+```
+
+#### 4.6 Subjects Identification{-}
+Please write another function called get_painting_subjects with one function input called PaintingName. The function works as following:
+
+When we enter the name of the painting, for example the 20th painting "主要題名：元王淵鷹逐畫眉　軸",
+
+it will return us the subjects of it, namely [1] "鷹" "畫眉" "竹" "蘆葦". The output is in character class rather than the list.
+
+for the painting with no subject, the output will be character(0).
+
+```{r}
+get_painting_subjects <- function(PaintingName){
+  
+}
+```
+
+
+#### 4.7 Special Exhibition Preparation{-}
+For the forthcoming exhibition, we need to build the more handy query for our visitors. Please build the function called get_painting_withDS with one input argument PaintingName. The output is always a list of that certain painting with the elements Dynasty, Title, Id, Subjects and Icon.
+
+Leveraging the get_painting_dynasty and get_painting_subjects functions can be practical.
+
+Also, be aware of the term 主要題名： in the beginning of Title, the term 作品號： in the beginning of Identifier are dropped. Also, Subjects are concluded in one element rather than the Subjects.X in separate.
+
+To be more specific, when we enter the 1st painting with its title "主要題名：唐閻立本職貢圖　卷", the structure of our output will be like:
+
+List of 5
+ $ Dynasty : chr "唐"
+ $ Title   : chr "唐閻立本職貢圖　卷"
+ $ Id      : chr "中畫00000100000"
+ $ Subjects: chr [1:14] "奇石" "孩童" "蕃族" "馬" ...
+ $ Icon    : chr "http://painting.npm.gov.tw/getCollectionImage.aspx?ImageId=652764&r=476948028"
+
+
+```{r}
+get_painting_withDS <- function(PaintingName){
+  
+}
+```
+
+#### 4.8 Guide to Dynasty-based Exhibition{-}
+The museum is going to have a Dynasty-based exhibition, we need provide visitors the guide to enjoy the certain painting. Whenever the visitor enter the name of painting, the app will tell him/her where to go:
+
+Please write the function called get_instruction with one input PaintingName, and the output will be one of the possible message below and also the exact aforementioned information from our get_painting_withDS function in ans47.
+
+If the painting is belonged to Qing Dynasty(清朝), please provide him message "Please go to 4F"
+If the painting is belonged to Ming Dynasty(明朝), please provide him message "Please go to 3F"
+If the painting is belonged to Song Dynasty(宋朝), please provide him message "Please go to 2F"
+For the rest of the painting, please provide him message "Please ask our reception"
+
+
+```{r}
+get_instruction <- function(PaintingName){
+  
+}
+```
+
+### 5. 交友軟體改良{-}
+
+This exercise is to help you understand function environment. First, run the following code to clean your Global environment
+
+```{r, echo=TRUE}
+rm(list=ls())
+```
+
+Second, execute the following chunk to obtain R script file "NTPUmeetCore.R"
+```{r, echo=TRUE}
+# download NTPUmeetCore.R script file
+xfun::download_file("https://www.dropbox.com/s/54khnc8k607amw1/NTPUmeetCore.R?dl=1")
+# open the file to take a look
+file.edit("./NTPUmeetCore.R")
+```
+
+When NTPUmeet is launched, "NTPUmeetCore.R" is sourced into user's cellphone global environment. Populate it with various objects including data and functions.
+
+```{r, echo=TRUE}
+# source the script to you global environment
+source("./NTPUmeetCore.R")
+```
+
+#### 5.3 like
+
+```{r ans53, echo=T}
+member2like <- members[[sample(1:1000,1)]]
+member2like
+member2like$preference
+like <- function(currentUser, member2like){
+
+
+
+  return(currentUser)
+}
+```
+
+### 加分題
+
+只有當非加分題的finalGrade > 6時，加分題才會加分。每小題「完全答對」加finalGrade一分，finalGrade達10分即不再加。
+
+#### 4.9 User interaction
+We are going to run the campaign for our Top-10 subjects in Qing Dynasty（清朝）. Every painting might have zero, one, or even multiple subjects. If any of its subjects belonged to the Top-10 subjects in Qing Dynasty. We will recognize it as a part of this Special Exhibition.
+
+Please build a function called get_special_instruction with one input PaintingName, and the output will be the one of the possible message below and also the exact aforementioned information from our get_painting_withDS function in ans47.
+
+If the painting is belonged to this special exhibition, please provide him message "Please visit our building A"
+
+If the painting is not belonged to this special exhibition, please provide him message "The painting is not belonged to our special exhibition."
+
+
+
+```{r ans44, echo=F}
+get_special_instruction <- function(PaintingName){
+  
+}
+```
+
+### 6. Rock-Paper-Scissor{-}
+
+設計一個剪刀，石頭，布的遊戲，當使用者執行
+
+會產生一個oneGame list of 3, 使用者可以執行以下三個可能招式：
+
+各別招式函數內部會有電腦隨機由“scissor”, “rock”, “paper”選一式出招。
+
+每個招式會回值以下3個可能的list之一：
+
+list(you=你的招式, computer=computer招式, 1)，表示勝過電腦
+
+list(you=你的招式, computer=computer招式, 0)，表示平手
+
+list(you=你的招式, computer=computer招式, -1)，表示輸給電腦
+
+請設計gameStart函數。
+```{r}
+gameStart <- function(){
+  
+}
+```
